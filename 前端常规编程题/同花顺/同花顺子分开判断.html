@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 判断是否为顺子 */
+        function isStraight(arrs) {
+            arrs.sort();//排序
+            
+            var first = arrs[0][0]; //取出第一个最小的数
+            var index = 1;//从第二个开始索引
+            while(arrs.length > index){
+                first++;
+                if(first != arrs[index][0]) {
+                    //如果不相等代表不连续
+                    return false;
+                }
+                index++;
+            }
+            return true;
+        }
+        
+        /* 判断是否为同花 */
+        function isFlush(arrs) {
+            var flower = arrs[0][1]; //取出第一个花
+            var index = 1;//从第二个开始索引
+            while(arrs.length > index){
+                if(flower != arrs[index][1]) {
+                    //如果不相等代表不是同花
+                    return false;
+                }
+                index++;
+            }
+            return true;
+        }
+        
+        function vaild(name, arrs) {
+            var result = isStraight(arrs) && isFlush(arrs);
+            var msg = "顺子同花分开判断 " + name + ": " + arrs.toString()+"\r\n";
+            if(result) {
+                msg += "这是同花顺";
+            } else {
+                msg += "这不是同花顺";
+            }
+            
+            document.write(msg);
+        }
+        
+        /* 判断是否为同花顺 */
+        function isStraightFlush(arrs) {
+            arrs.sort();//排序
+            
+            var first = arrs[0][0]; //取出第一个最小的数
+            var flower = arrs[0][1]; //取出第一个花
+            var index = 1;//从第二个开始索引
+            while(arrs.length > index){
+                first++;
+                if(first != arrs[index][0] || flower != arrs[index][1]) {
+                    //如果两个条件任意一个不相等代表不连续或不是同花
+                    return false;
+                }
+                index++;
+            }
+            return true;
+        }
+        
+        function vaild2(name, arrs) {
+            var result = isStraightFlush(arrs);
+            var msg = "同花顺同时判断 " + name + ": " + arrs.toString()+"\r\n";
+            if(result) {
+                msg += "这是同花顺";
+            } else {
+                msg += "这不是同花顺";
+            }
+            
+            document.write(msg);
+        }
+        
+        /*
+         * 为了演示，以下数字为扑克牌每种花的代码定义
+         * 111 = 黑桃
+         * 222 = 红心
+         * 333 = 黑梅
+         * 444 = 红方
+         */
+        var pokers1=[[3,111],[5,111],[4,111],[6,111],[2,111]];//这是一个无序但连续且同花的二维结构数组
+        var pokers2=[[9,111],[5,222],[4,444],[6,333],[8,111]];//这是一个无序且不连续且不同花的二维结构数组
+        
+        vaild("pokers1",pokers1);
+        document.write("<br/>");
+        vaild("pokers2",pokers2);
+        document.write("<br/>");
+        document.write("<br/>");
+        vaild2("pokers1",pokers1);
+        document.write("<br/>");
+        vaild2("pokers2",pokers2);
+        document.write("<br/>");
+        </script>
+</body>
+</html>

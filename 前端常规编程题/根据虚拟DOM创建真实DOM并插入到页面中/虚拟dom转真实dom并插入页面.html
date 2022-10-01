@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Element({type, props}){
+            this.type = type;
+            this.props = props;
+        }
+
+        var elem =new Element({type:'ul', props:{className:'list', children:['list',
+            new Element({type:'li', props:{children:['list1']}})
+        ]}})
+
+        Element.prototype.render = function(){
+            var el = document.createElement(this.type);
+            props = this.props;
+            let propName, propValue;
+            for(propName in props){
+                console.log(propName, typeof propName);
+              
+                if(propName == 'children'){
+                    props.children.forEach(child => {
+                        let childEl = null;
+                        if(child instanceof Element){
+                            childEl = child.render()
+                        }else{
+                            childEl = document.createTextNode(child);
+                        }
+                        el.appendChild(childEl);
+                    })
+                }else if(propName == 'className'){
+                    propValue = props[propName];
+                    el.setAttribute('class', propValue);
+                }else{
+                    propValue = props[propName];
+                    el.setAttribute(propName, propValue);
+                }
+            }
+            return el
+        }
+
+        document.querySelector('body').appendChild(elem.render());
+    </script>
+</body>
+</html>

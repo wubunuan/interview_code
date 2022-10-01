@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function isValid(str){
+            if(str.length % 2 !== 0) return false;
+            let map = new Map([
+                ['(', ')'],
+                ['[', ']'],
+                ['{', '}']
+            ])
+            let stack = [];
+            for(let v of str){
+                if(map.has(v)){
+                    stack.push(v);
+                }else{
+                    if(v !== map.get(stack.pop())) return false;
+                }
+            }
+            return !stack.length;
+        }
+    </script>
+</body>
+</html>

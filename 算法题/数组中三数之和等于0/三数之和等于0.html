@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var threeSum = function(nums) {
+            if (nums.length < 3) return []
+
+            nums.sort((a, b) => a - b) //升序排列 //sort方法会改变原始数组
+            let res = []
+            for (let i = 0; i < nums.length - 2; i++) {
+                // 去重
+                if (i > 0 && nums[i] == nums[i - 1]) continue
+
+                const target = -nums[i]
+                let left = i + 1, right = nums.length - 1
+                while (left < right) {
+                    const sum = nums[left] + nums[right]
+                    if (sum == target) {
+                        res.push([nums[i], nums[left], nums[right]])
+                        /*
+                        下面的代码相当于：
+                        while (left < right) {
+                            // 不管前后相不相等，left 都要往前走
+                            left++;
+                            if (nums[left - 1] != nums[left]) break;
+                        }
+                        while (left < right) {
+                            // 不管前后相不相等，right 都要往后走
+                            right--;
+                            if (nums[right + 1] != nums[right]) break;
+                        }
+                        */
+                        // 去重
+                        while (left < right && nums[left] == nums[++left]);
+                        while (left < right && nums[right] == nums[--right]);
+                    } else if (sum < target) {
+                        left++
+                    } else {
+                        right--
+                    }
+                }
+            }
+            return res
+        };
+
+        nums = [-1, 0, 1, 2, -1, -4];
+        console.log(threeSum(nums));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function shuffle(arr){
+            const len = arr.length;
+            for(let i = 0; i < len - 1; i++){  //注意是len - 1
+                let idx = Math.floor(Math.random() * (len - i));
+                [arr[idx], arr[len - i - 1]] = [arr[len - i - 1], arr[idx]];
+            }
+            return arr;
+        }
+        var arr = [0,1,2,3,4,5,6,7,8,9];
+        console.log(shuffle(arr));
+    </script>
+</body>
+</html>

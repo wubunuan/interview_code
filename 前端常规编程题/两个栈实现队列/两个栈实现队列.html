@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var CQueue = function(){
+            this.inStack = []
+            this.outStack = []
+        }
+
+        CQueue.prototype.appendTail = function(value){
+            //加入元素 可以直接向instack里面push
+            this.inStack.push(value)
+        }
+
+        CQueue.prototype.deleteHead = function(){
+            const {inStack,outStack} = this;
+            //const inStack = this.inStack const outStack = this.outStack
+            if(outStack.length){
+                return outStack.pop()
+            //两个栈 一个instack 一个outstack 我想要删除队列头部的元素 用一个栈是不行的
+            //要把instack里的元素倒进outstack里，然后取第一个元素
+            }else{
+                while(inStack.length){
+                    outStack.push(inStack.pop());
+                }
+                return outStack.pop() || -1
+            }
+        }
+
+        var obj = new CQueue()
+        obj.appendTail(1)
+        obj.appendTail(2)
+        console.log(obj)//[1,2]
+
+        obj.deleteHead()
+        console.log(obj)//[2]
+    </script>
+</body>
+</html>

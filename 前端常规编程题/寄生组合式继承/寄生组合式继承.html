@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Parent(name){
+            this.name = name;
+            this.arr = [1];
+        }
+
+        Parent.prototype.say = function(){
+            console.log('hello');
+        }
+
+        function Child(name, like){
+            Parent.call(this, name);
+            this.like = like;
+        }
+
+        Child.prototype = Object.create(Parent.prototype);
+        Child.prototype.constructor = Child;
+
+        let boy1 = new Child('小红', 'apple');
+        let p1 = new Parent('小爸爸');
+        console.log(boy1.constructor);
+        console.log(p1.constructor);
+        console.log(boy1.say());
+    </script>
+</body>
+</html>

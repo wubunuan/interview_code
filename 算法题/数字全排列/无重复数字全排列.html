@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function permute(nums){
+            let res = [];
+            function swap(a, b){
+                if(a === b) return;
+                [nums[a], nums[b]] = [nums[b], nums[a]];
+            }
+            function dfs(p, q){ //索引p到q的全排列
+                if(p === q){
+                    res.push([...nums]);
+                    return;
+                }
+                for (let i = p; i <= q; i++) {
+                   swap(p, i);
+                   dfs(p+1, q);
+                   swap(p, i)
+                }
+            }
+            dfs(0, nums.length - 1);
+            return res;
+        }
+        let nums = [1, 2, 3];
+        console.log(permute(nums));
+    </script>
+</body>
+</html>

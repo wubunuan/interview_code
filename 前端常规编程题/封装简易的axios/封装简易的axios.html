@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function Axios(config) {
+            this.defaults = config
+            this.interceptors = {
+                request: new InterceptorManager(),
+                response: new InterceptorManager()
+            }
+        }
+        Axios.prototype.request = function (config) {
+            let promise = Promise.resolve(config)
+            let chains = [dispatchRequest, undefined]
+
+            // 处理拦截器请求
+            this.interceptors.request.handlers.forEach(handler => {
+                chains.unshift(handler.fulfilled, handler.rejected)
+            })
+            this.interceptors.response.handlers.forEach(handler => {
+                chains.push(handler.fulfilled, handler.rejected)
+            })
+            while (chains.length > 0) {
+                promise = promise.then(chains.shift(), chains.shift())
+            }
+
+            return promise
+        }
+        Axios.prototype.get = function (config) {
+            return this.request({ method: "GET" })
+        }
+        Axios.prototype.post = function (config) {
+            return this.request({ method: "POST" })
+        }
+
+        // 用于处理返回的数据（暂时未对数据进行处理）
+        function dispatchRequest(config) {
+            return xhrAdapter(config).then(response => {
+                console.log('dispatchRequest:', response)
+                return response
+            }).catch(err => {
+                console.log('dispatchRequest:', err)
+            })
+        }
+
+        // 用于发送ajax请求
+        function xhrAdapter(config) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open(config.method, config.url)
+                xhr.send()
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve({
+                                config,
+                                data: xhr.responseText,
+                                headers: xhr.getAllResponseHeaders(),
+                                request: xhr,
+                                status: xhr.status,
+                                statusText: xhr.statusText
+                            })
+                        } else {
+                            reject("ajax请求失败, 报错:" + xhr.statusText)
+                        }
+                    }
+                }
+
+                // 执行取消请求
+                if (config.cancelToken) {
+                    config.cancelToken.promise.then(resolve => {
+                        xhr.abort()
+                    })
+                }
+            })
+        }
+
+        // 创建axios对象
+        function createInstance(config) {
+            let context = new Axios(config)
+            let instance = Axios.prototype.request.bind(context)
+            Object.keys(context).forEach(key => {
+                instance[key] = context[key]
+            })
+            Object.keys(Axios.prototype).forEach(key => {
+                instance[key] = Axios.prototype[key].bind(context)
+            })
+            return instance
+        }
+        let axios = createInstance()
+
+        // 拦截器管理器的构造函数
+        function InterceptorManager() {
+            this.handlers = []
+        }
+        InterceptorManager.prototype.use = function (fulfilled, rejected) {
+            this.handlers.push({ fulfilled, rejected })
+        }
+
+        // 取消请求的构造函数
+        function CancelToken(handler) {
+            let resolvePromise = null
+            this.promise = new Promise(resolve => {
+                resolvePromise = resolve
+            })
+            handler(function () {
+                resolvePromise()
+            })
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // // 假设有一台本地机器，无法做加减乘除运算（包括位运算）。
+        // // 因此无法执行 a + b、a+ = 1 这样的 JS 代码。
+        // // 然后我们提供一个服务器端的 HTTP API。
+        // // 可以传两个数字类型的参数，响应结果是这两个参数的和。
+        // // 这个 HTTP API 的 JS SDK（在本地机器上运行）​的使用方法如下：
+        // // SDK 的模拟实现：
+        // function asyncAdd(a, b, cb) {
+        //     setTimeout(() => {
+        //         cb(null, a + b);
+        //     }, Math.floor(Math.random()*100))
+        // }
+        // // SDK 模拟调用
+        // asyncAdd(3, 5, (err, result) => {
+        //     console.log(result); // 8
+        // });
+
+        // // 现在要求在本地机器上实现一个 sum 函数，支持以下用法：
+        // (async () => {
+        //     const result1 = await sum(1, 4, 6, 9, 2, 4);
+        //     const result2 = await sum(3, 4, 9, 2, 5, 3, 2, 1, 7);
+        //     const result3 = await sum(1, 6, 0, 5);
+        //     console.log([result1, result2, result3]); // [26, 36, 12]
+        // })();
+
+        function asyncAdd(a, b, cb) {
+            setTimeout(() => {
+                cb(null, a + b);
+            }, Math.floor(Math.random()*100))
+        }
+
+        function sum(...args) {
+            const result = []
+            function _sum(resolve, reject) {
+                new Promise((r, j) => {
+                    let a = args.pop()
+                    let b = args.pop()
+                    a = a !== undefined? a : 0
+                    b = b !== undefined? b : 0 // 如果访问的元素超出了数组范围，则转为 0
+                    asyncAdd(a, b, (err, res) => {
+                        if (err) j(err)
+                        r(res)
+                    })
+
+                    if (args.length) {
+                        _sum(resolve, reject)
+                    }
+                })
+                .then(val => {
+                    result.push(val)
+                    setTimeout(() => {
+                        if (args.length <= 0) {
+                            resolve(sum(...result))
+                            // console.log(result);
+                        }
+                    }, 100)
+                })
+            }
+
+            return new Promise((resolve, reject) => {
+                if (!args || !args.length) resolve(0)
+                if (args.length == 1) resolve(args[0])
+                _sum(resolve, reject)
+            })
+        }
+
+        (async () => {
+            const result1 = await sum(1, 4, 6, 9, 1, 4)
+            const result2 = await sum(3, 4, 9, 2, 5, 3, 2, 1, 7)
+            const result3 = await sum(1, 6, 0, 5)
+            console.log([result1, result2, result3]) // [25, 36, 12]
+        })()
+    </script>
+</body>
+</html>

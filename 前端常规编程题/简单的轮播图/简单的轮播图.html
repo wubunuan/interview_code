@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>轮播图实现01</title>
+    <style type="text/css">
+        .lunbo {
+            width: 900px;
+            height: 400px;
+            margin: 100px auto;
+        }
+
+        .lunbo img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!--轮播图模块 -->
+    <div class="lunbo">
+        <img id="lunbo_img" src="./pic/img3.jpeg">
+    </div>
+    <!-- Js代码 -->
+    <script>
+        var index = 1;
+        function lunbo() {
+            index++;
+            //判断index是否大于3
+            if (index > 3) {
+                index = 1;
+            }
+            //获取img对象
+            var img = document.getElementById("lunbo_img");
+            img.src = "./pic/img" + index + ".jpeg";
+        }
+        //2.定义定时器
+        setInterval(lunbo, 2000);
+        /*切记定时器里调用lunbo方法不能加(),setInterval(lunbo,2000);如果加()会执行lunbo（）方法，而导致定时器没用。*/
+    </script>
+</body>
+
+</html>

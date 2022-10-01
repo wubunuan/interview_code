@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="button">按钮</button>
+
+    <script>
+        const button = document.getElementById('button');
+        function payMoney(e){
+            console.log('剁手');
+            // console.log(this);
+            // console.log(e);
+        }
+        function debounce(fn, delay){
+            let timer;
+            return function(){
+                let context = this;
+                let args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(context, args);
+                }, delay);
+            }
+        }
+        button.addEventListener('click', debounce(payMoney, 1000));
+    </script>
+</body>
+</html>

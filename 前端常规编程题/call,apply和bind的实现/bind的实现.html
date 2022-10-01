@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function person (a, b, c){
+            console.log(this.name);
+            console.log(a, b, c);
+        }
+        person.prototype.collection = '收藏';
+        var egg = {name: '蛋老师'};
+        Function.prototype.newBind = function(obj){
+            if(typeof this !== 'function'){
+                throw new TypeError('错误');
+            }
+            var that = this, //person
+                arr = Array.prototype.slice.call(arguments, 1),
+                o = function(){}
+                newf = function(){
+                    var arr2 = Array.prototype.slice.call(arguments), //将类数组对象arguments转换为数组
+                        arrSum = arr.concat(arr2);
+                    if(this instanceof o){
+                        that.apply(this, arrSum); // 实现new
+                    }else{
+                        that.apply(obj, arrSum);
+                    }
+                }
+            o.prototype = that.prototype;
+            newf.prototype = new o();
+            return newf;
+        }
+        var bibi = person.newBind(egg, '点赞', '投币');
+        var b = new bibi('充电');
+        console.log(b.collection);
+
+    </script>
+</body>
+</html>

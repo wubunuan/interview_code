@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 创建一个订阅中心
+        class Bus {
+            constructor() {
+                this.obj = {}
+            }
+            on(key, fn) {
+                this.obj[key] = fn;
+            }
+            emit(key, value) {
+                this.obj[key].call(this, value);
+            }
+        }
+        let bus = new Bus();
+        // 订阅一个name为test1的事件
+        bus.on('test1', (val) => {
+            console.log('test1', 'value:' + val)
+        });
+        // 订阅一个name为test2的事件
+        bus.on('test2', function (val) {
+            console.log('test2', 'value:' + val)
+        });
+
+        setTimeout(() => {
+            // 触发test1
+            bus.emit('test1', 1)
+            // 触发test2
+            bus.emit('test2', 2)
+        }, 1000)
+
+    </script>
+</body>
+</html>

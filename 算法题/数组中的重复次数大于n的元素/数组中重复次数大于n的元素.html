@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function shuChuChongFuGeShu(arr) {
+            var mapStorage = {};
+            for (var index = 0; index < arr.length; index++) {
+                var val = arr[index];
+                if (!mapStorage[val]) {
+                    mapStorage[val] = 1
+                } else {
+                    mapStorage[val]++;
+                }
+            }
+            for (var k in mapStorage) {
+            // document.write(k + '在数组中出现的次数为' + mapStorage[k]+"");
+                if(mapStorage[k] > 2){
+                    console.log(k);
+                }
+            }
+        }
+        var arrayList =[8,9,8,10,11,11,12,9,8,8,9,100];
+        // document.write(arrayList.join()+"");
+        shuChuChongFuGeShu(arrayList);
+    </script>
+</body>
+</html>

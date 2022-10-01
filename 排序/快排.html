@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function swap(nums, left, right){
+            [nums[left], nums[right]] = [nums[right], nums[left]];
+        }
+        function partition(nums, left, right){
+            let pivot = left;
+            let idx = left + 1;
+            for(let i = idx; i <= right; ++i){
+                if(nums[i] < nums[pivot]){
+                    swap(nums, i, idx);
+                    idx++;
+                }
+            }
+            swap(nums, pivot, idx - 1);
+            return idx - 1;
+        }
+        function quickSort(nums){
+            function QS(nums, left, right){
+                if(left >= right) return;
+                const idx = partition(nums, left, right);
+                QS(nums, 0, idx - 1);
+                QS(nums, idx + 1, right);
+            }
+            QS(nums, 0, nums.length - 1);
+            return nums;
+        }
+        const arr = [20, 10, 4, 5, 8, 31, 0, 50, 1];
+        console.log(quickSort(arr));
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function father(name){
+            this.name = name;
+            this.setName = function(){
+                console.log(this.name);
+            }
+        }
+
+        function myNew (constructor, ...arg){
+            let newObj = new Object();
+            newObj.__proto__ = constructor.prototype;
+            let res = constructor.call(newObj, ...arg);
+            return res instanceof Object ? res : newObj;
+        }
+
+        let faker = myNew(father, 'faker');
+        faker.setName();
+    </script>
+</body>
+</html>

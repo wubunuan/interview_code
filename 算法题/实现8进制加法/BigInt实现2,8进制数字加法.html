@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //  // 二进制数字相加
+        // var addBinary = function(a, b) {
+        //     return (BigInt(`0b${a}`) + BigInt(`0b${b}`)).toString(2);
+        // };
+        // const result = addBinary('11', '11');
+        // const result1 = addBinary('11', '11');
+        // console.log(result, typeof result);
+        // console.log(result1, typeof result1);
+
+            // 八进制数字相加
+        // var addBinary = function(a, b) {
+        //     return (BigInt(`0o${a}`) + BigInt(`0o${b}`)).toString(8);
+        // };
+        // const res = addBinary(15, 16);
+        // const result = parseInt(addBinary(15, 16));
+        // console.log(res, typeof res);
+        // console.log(result, typeof result);
+
+        console.log(Number.MAX_SAFE_INTEGER+1 === Number.MAX_SAFE_INTEGER+2);//BigInt解决浮点数精度的问题
+        console.log(Number.MAX_SAFE_INTEGER);
+    </script>
+</body>
+</html>

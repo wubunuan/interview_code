@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 判断是否为同花顺 */
+		function isStraightFlush(arrs) {
+			arrs.sort();//排序
+			
+			var first = arrs[0][0], //取出第一个最小的数
+			    flower = arrs[0][1], //取出第一个花
+			    index = 1;//从第二个开始索引
+			while(arrs.length > index){
+				first++;
+				if(first != arrs[index][0] || flower != arrs[index][1]) {
+					//如果两个条件任意一个不相等代表不连续或不是同花
+					return false;
+				}
+				index++;
+			}
+			return true;
+		}
+
+		var pokers1=[[3,111],[5,111],[4,111],[6,111],[2,111]];//这是一个无序但连续且同花的二维结构数组
+		var pokers2=[[9,111],[5,222],[4,444],[6,333],[8,111]];//这是一个无序且不连续且不同花的二维结构数组
+		console.log(isStraightFlush(pokers1));
+		console.log(isStraightFlush(pokers2));
+
+    </script>
+</body>
+</html>

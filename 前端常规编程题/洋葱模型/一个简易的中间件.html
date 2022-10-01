@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * express中间件的实现和执行顺序
+         */
+        var express = require('express');
+
+        var app = express();
+        app.listen(3000, function () {
+            console.log('listen 3000...');
+        });
+
+        function middlewareA(req, res, next) {
+            console.log('middlewareA before next()');
+            next();
+            console.log('middlewareA after next()');
+        }
+
+        function middlewareB(req, res, next) {
+            console.log('middlewareB before next()');
+            next();
+            console.log('middlewareB after next()');
+        }
+
+        function middlewareC(req, res, next) {
+            console.log('middlewareC before next()');
+            next();
+            console.log('middlewareC after next()');
+        }
+
+        app.use(middlewareA);
+        app.use(middlewareB);
+        app.use(middlewareC);
+    </script>
+</body>
+</html>

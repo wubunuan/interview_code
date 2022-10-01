@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function addString(a, b){
+            let i = a.length-1,
+                j = b.length-1,
+                add = 0;   //进位
+            const arr = [];
+            while(i >= 0 || j >= 0 || add != 0){
+                const x = i >= 0 ? a.charAt(i) - '0' : 0,
+                      y = j >= 0 ? b.charAt(j) - '0' : 0,
+                      result = x + y + add;
+                arr.push(result % 10);
+                add = Math.floor(result / 10);
+                i -= 1;
+                j -= 1;
+            }
+            return arr.reverse().join('');
+        }
+        console.log(addString('14', '15'));
+        let add = '2'-'0';
+        console.log(add, typeof add);
+    </script>
+</body>
+</html>

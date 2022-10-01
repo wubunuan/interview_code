@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 将数组扁平化并去除其中重复数据
+        // 最终得到一个升序的不重复的数组
+        let arr = [
+            [1,2,2],
+            [3,4,5,5],
+            [6,7,8,9,
+            [11,12,[12,12,[13]]]],
+            10
+        ]
+
+        // 磨平
+        Array.prototype.flat = function(){
+            const result = this.map((item)=>{
+               if(Array.isArray(item)) return item.flat()
+               else{
+                    return [item]
+               }
+            })
+            return [].concat(...result)
+        }
+
+        // 去重
+        Array.prototype.unique = function(){
+            return [...new Set(this)]
+        }
+
+        // 升序
+        const sortFn = (a, b) => a-b
+
+        const result1 = arr.flat().unique().sort(sortFn)
+        console.log(result1);
+    </script>
+</body>
+</html>

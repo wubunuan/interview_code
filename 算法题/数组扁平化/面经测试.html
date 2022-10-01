@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 数组的join方法
+        // const arr = [1, 2, 3];
+        // const arr = ['1', '2', false];
+        // console.log(arr.join('and'));
+
+        // 请为所有数组对象添加一个flatten()方法, 返回其扁平结构      tip: 跳过[], null, undefined
+        let arr1 = [[[[[0]], [1]], [[[2], [3]]], [[4], [5]]]];
+        let arr2 = [['a','b'], [0,['a']], [false], null];
+        Array.prototype.flatten = function(){ //这里不能用箭头函数
+            return this.reduce((acc, cur)=>{
+               if(cur==undefined) return acc; 
+               else{
+                   return acc.concat(Array.isArray(cur) ? cur.flatten() : cur)
+               }                 
+            },[])
+        }
+       console.log(arr1.flatten());
+       console.log(arr2.flatten());
+    //    console.log(0 == undefined);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 给定一个数组，有正数，负数和零，排列给定的数组，使负数在左边，0在中间，正数在右边。
+        let arr = [-1, 2, 0, -5, 0, 8, -4];
+
+        function sortNumbers(arr) {
+
+            function swap(a, b) {
+                [arr[a], arr[b]] = [arr[b], arr[a]];
+            }
+
+            let low = 0, mid = 0, high = arr.length - 1;
+            while (mid <= high) {
+                if (arr[mid] < 0) {
+                    swap(low++, mid++)
+                }
+                else if (arr[mid] == 0) {
+                    mid++;
+                }
+                else
+                    swap(mid, high--);
+            }
+        }
+        sortNumbers(arr)
+        console.log(arr)
+    </script>
+</body>
+
+</html>

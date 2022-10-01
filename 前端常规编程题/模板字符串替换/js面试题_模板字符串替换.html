@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+// 结构：t="<ul><li>${name}</li><li>${age}</li></ul>";
+// 数据：data=[{"name": "小明"，"age": "6"}];
+// 结果：<ul><li>小明</li><li>6</li></ul>
+// 写一个函数，讲t中的数据转化成结果
+// 如果data中有多条数据，怎么实现渲染?
+
+        String.prototype.render = function(content){
+            return this.replace(/\${(.*?)}/g, (match, key) => content[0][key]);
+        }
+
+        const t="<ul><li>${name}</li><li>${age}</li></ul>",
+              data=[{"name": "小明", "age": "6"}];
+        console.log(t.render(data));
+    </script>
+</body>
+</html>

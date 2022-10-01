@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function person(a, b, c, d){
+            return{
+                name:this.name,
+                a,b,c,d
+            }
+        }
+        const egg = {name:'蛋老师'};
+        Function.prototype.newCall = function(obj){
+            var obj = obj || window , result; //防止newCall的第一个参数是null  //let不允许重复声明，所以用var
+            obj.p = this;
+            let newArguments = [];
+            let n = arguments.length;
+            for (let i = 1; i < n; i++) {
+               newArguments.push(arguments[i]);
+            }
+            result = obj.p(...newArguments);
+            delete obj.p;
+            return result;
+        }
+        // console.log(person.newCall(egg,['点赞','收藏','转发','充电'])); 
+        console.log(person.newCall(egg,'点赞','收藏','转发','充电')); 
+    </script>
+</body>
+</html>

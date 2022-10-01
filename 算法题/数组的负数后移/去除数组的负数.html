@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //定义一个数组用于测试
+        var arrX=[1,2,3,-4,-5,6,-7];
+        //去除数组中的负数
+        function removefushu(arrTem){
+            for(var i=0;i<arrTem.length;i++){
+                if(arrTem[i]<0){
+                    arrTem.splice(i,1);
+                    removefushu(arrTem);
+                }
+            }
+        }
+        removefushu(arrX);
+        console.log(arrX);
+
+        
+    </script>
+</body>
+</html>

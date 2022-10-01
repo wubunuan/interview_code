@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var heapSort = function (nums) {
+            let heapSize = nums.length;
+            buildMaxHeap(nums, heapSize);
+            for (let i = nums.length - 1; i >= 0; --i) {
+                swap(nums, 0, i);
+                heapSize--;
+                maxHeapify(nums, 0, heapSize);
+            }
+            return nums;
+
+            function buildMaxHeap(nums, heapSize) {
+                for (let i = heapSize >> 1 - 1; i >= 0; --i) {
+                    maxHeapify(nums, i, heapSize);
+                }
+            }
+            function maxHeapify(nums, i, heapSize) {
+                let left = 2 * i + 1;
+                let right = 2 * i + 2;
+                let largestIdx = i;
+                if (left < heapSize && nums[left] > nums[largestIdx]) {
+                    largestIdx = left;
+                }
+                if (right < heapSize && nums[right] > nums[largestIdx]) {
+                    largestIdx = right;
+                }
+                if (largestIdx !== i) {
+                    swap(nums, i, largestIdx);
+                    maxHeapify(nums, largestIdx, heapSize);
+                }
+            }
+            function swap(nums, a, b) {
+                [nums[a], nums[b]] = [nums[b], nums[a]];
+            }
+        };
+        let arr = [20, 10, 4, 5, 8, 31, 0, 50, 1,];
+        console.log(heapSort(arr));
+    </script>
+</body>
+
+</html>

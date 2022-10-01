@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function demo(arr) {
+            // for (var i = 0; i < arr.length; i++) {
+            //     (function (i) {
+            //         setTimeout(() => {
+            //             console.log(arr[i])
+            //         }, 1000 * i)
+            //     })(i)
+            // }
+
+            for(let i = 0; i < arr.length; ++i){
+                setTimeout(() => {
+                    console.log(arr[i]);
+                }, i * 1000);
+            }
+        }
+        demo([4, 5, 6, 7, 8])
+
+        function demo1(){
+            // for(let i = 0; i < arr.length; ++i){
+            //     setTimeout(() => {
+            //         console.log(arr[i])
+            //     }, i * 1000);
+            // }
+
+            // for(var i = 0; i < arr.length; ++i){
+            //     (function (i){
+            //         setTimeout(() => {
+            //             console.log(arr[i])
+            //         }, i * 1000);
+            //     })(i)
+            // }
+
+            for(let i = 0; i < 5; ++i){
+                setTimeout(() => {
+                    console.log(i + 1);
+                }, i * 1000);
+            }
+        }
+        demo1();
+
+    </script>
+</body>
+
+</html>

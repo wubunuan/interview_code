@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // 数组扁平化
+        let arr = [1, 2, [3, [4, [5, 6]]]];
+        // 要求将数组扁平化处理：[1,2,3,4,5,6]
+
+        // 方式一： flat
+        // console.log(arr.flat(Infinity));
+
+        // 方式二： reduce + 递归
+        // function flatFn(arr){
+        //     return arr.reduce((acc, cur) => {
+        //          return acc.concat(Array.isArray(cur) ? flatFn(cur) : cur)   
+        //     }, [])
+        // }
+        // console.log(flatFn(arr), typeof flatFn(arr)); 
+
+        Array.prototype.myFlat = function(){
+            return this.reduce((acc, cur)=>{
+               return acc.concat(Array.isArray(cur) ? cur.myFlat() : cur);
+            },[])
+        }
+        console.log(arr.myFlat());
+
+        // 方式三：数组转换为字符串，再将字符串转换为数组
+        // function flatFn(arr) {
+        //     return arr.join(',').split(',').map((item) => {
+        //         return item = parseInt(item);
+        //     })
+        // }
+        // console.log(flatFn(arr));
+
+       
+    </script>
+</body>
+
+</html>

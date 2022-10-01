@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //版本号升序排列
+        let arr = ['0.1.1', '2.3.3', '0.302.1', '4.2', '4.3.5', '4.3.4.5'];
+        arr.sort((a, b) => {
+            const arr1 = a.split(".");
+            const arr2 = b.split(".");
+            for(let i = 0; i < arr1.length || i < arr2.length; ++i){
+                if(arr[1] == undefined || arr2[i] == undefined){
+                    return arr1.length - arr2.length;
+                }
+                if(arr1[i] === arr2[i]){
+                    continue;
+                } else {
+                    return arr1[i] - arr2[i];
+                }
+            }
+        });
+        console.log(arr);
+    </script>
+</body>
+</html>

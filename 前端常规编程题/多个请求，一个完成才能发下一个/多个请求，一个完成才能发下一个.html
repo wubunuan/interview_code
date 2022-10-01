@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        有多个并发请求时，实现一个请求完成后，再请求下一个。实现间隔1s按顺序打印出1、2、3、4。以下提供部分代码！
+        function request(x) {
+            return new Promise(resolve => {
+                const timer = setTimeout(() => {
+                    console.log(x)
+                    resolve(x)
+                    clearTimeout(timer)
+                }, 1000)
+            })
+        }
+
+        function service() {
+            // 补全
+        }
+
+        service(1)
+        service(2)
+        service(3)
+        service(4)
+        */
+
+        // ---------------------------------------------------------------------------------------------
+
+        function request(x) {
+            return new Promise(resolve => {
+                const timer = setTimeout(() => {
+                    console.log(x)
+                    resolve(x)
+                    clearTimeout(timer)
+                }, 1000)
+            })
+        }
+
+        // 防抖
+        const delay = (function () {
+            let timer = 0
+            return function (callback, ms) {
+                clearTimeout(timer)
+                timer = setTimeout(callback, ms)
+            }
+        })()
+
+        // 实现promise队列
+        const queue = []
+        function promiseQueue(list) {
+            // 利用 async await
+            // for(let val of list){
+            //     await val();
+            //     // console.log(1); await会阻断for循环
+            // }
+
+            // 利用 reduce 
+            list.reduce((acc, cur) => acc.then(() => cur()), Promise.resolve());
+
+
+            // 利用 promise
+            // let sequence = Promise.resolve()
+            // list.forEach( (item) => {
+            //     sequence = sequence.then(item);
+            // })
+            // return sequence
+        }
+
+        function service(x) {
+            queue.push(() => request(x))
+            delay(() => {
+                promiseQueue(queue)
+            }, 10)
+        }
+
+        service(1)
+        service(2)
+        service(3)
+        service(4)
+
+
+    </script>
+</body>
+
+</html>

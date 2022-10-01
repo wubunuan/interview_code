@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 题目需求
+        let middleware = []
+        middleware.push((next) => {
+            console.log(1)
+            next()
+            console.log(1.1)
+        })
+        middleware.push((next) => {
+            console.log(2)
+            next()
+            console.log(2.1)
+        })
+        middleware.push((next) => {
+            console.log(3)
+            next()
+            console.log(3.1)
+        })
+        
+        let fn = compose(middleware)
+        fn()
+        // /*
+        // 1
+        // 2
+        // 3
+        // 3.1
+        // 2.1
+        // 1.1
+        // */
+
+        function compose(middleware){
+            return () => {
+                function dispatch(i){
+                    const ware = middleware[i];
+                    if(!ware) return;
+                    ware(() => dispatch(i + 1));
+                }
+                dispatch(0);
+            }
+        }
+
+        //  优化，支持异步、传参
+        function compose (middleware) {
+            return async function(...args) {
+                await dispatch(0)
+                async function dispatch (i) {
+                    const fn = middleware[i]
+                    if(!fn) return null
+                    await fn(function next() {
+                        dispatch(i+1)
+                    },...args)
+                }
+            }
+        }
+    </script>
+</body>
+</html>
