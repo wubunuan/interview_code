@@ -30,3 +30,4 @@ function num2cn(n) {
     if (len % 4 === 2 && n[0] === '1') res = res.slice(1);
     return flag ? '负' + res : res;
 }
+console.log(num2cn(12345678));
